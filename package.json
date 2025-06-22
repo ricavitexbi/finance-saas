@@ -1,0 +1,21 @@
+{
+  "name": "vitexai-dashboard",
+  "version": "3.0.0",
+  "description": "VitexAI Financial Intelligence Dashboard",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve . -p 3000"
+  },
+  "keywords": [
+    "financial",
+    "dashboard",
+    "analytics",
+    "supabase"
+  ],
+  "author": "VitexAI",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}
