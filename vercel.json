@@ -1,22 +1,8 @@
 {
   "name": "vitexai-dashboard",
-  "version": 2,
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "status": 404,
-      "dest": "/index.html"
-    }
-  ],
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": null,
   "headers": [
     {
       "source": "/app.js",
