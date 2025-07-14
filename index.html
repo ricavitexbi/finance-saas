@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='60' width='15' height='30' fill='%23718096'/><rect x='30' y='40' width='15' height='50' fill='%234A5568'/><rect x='50' y='50' width='15' height='40' fill='%234A5568'/><rect x='70' y='30' width='15' height='60' fill='%232E86AB'/><path d='M 5 55 L 45 15 L 50 20 L 10 60 Z' fill='%232E86AB'/><polygon points='45,15 55,15 50,5' fill='%232E86AB'/></svg>">
     <style>
         :root {
             --primary-blue: #2E86AB;
@@ -68,6 +69,19 @@
             display: flex;
             align-items: center;
             gap: 16px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
         }
         
         .header h1 {
@@ -346,6 +360,425 @@
             display: block;
         }
         
+        .quick-add-section {
+            background: var(--bg-white);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .quick-add-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+        }
+        
+        .input-section {
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .input-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 16px;
+        }
+        
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+        
+        .metric-card {
+            background: var(--bg-white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+        
+        .metric-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .metric-title {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .metric-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--dark-gray);
+            margin-bottom: 4px;
+            letter-spacing: -0.025em;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover .metric-value {
+            transform: scale(1.05);
+        }
+        
+        .metric-trend {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        .trend-up { color: var(--success); }
+        .trend-down { color: var(--danger); }
+        .trend-neutral { color: var(--text-secondary); }
+        
+        .table-container {
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        
+        .table-container h3,
+        .table-container h4 {
+            padding: 20px 24px 16px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.875rem;
+        }
+        
+        th {
+            background: var(--bg-light);
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        td {
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        
+        tr {
+            transition: background-color 0.2s ease;
+        }
+        
+        tr:hover {
+            background: var(--bg-light);
+        }
+        
+        .chart-container {
+            background: var(--bg-white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-container:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        .chart-container h4 {
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .chart-container canvas {
+            max-height: 320px !important;
+            width: 100% !important;
+        }
+        
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .summary-card {
+            background: var(--primary-blue);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .summary-card h4 {
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .summary-card .value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        
+        .transaction-row {
+            transition: all 0.2s ease;
+        }
+        
+        .transaction-row.receita {
+            border-left: 3px solid var(--success);
+        }
+        
+        .transaction-row.despesa {
+            border-left: 3px solid var(--danger);
+        }
+        
+        .value-positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        .value-negative {
+            color: var(--danger);
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-light);
+            font-size: 0.875rem;
+        }
+        
+        .footer strong {
+            color: var(--dark-gray);
+        }
+
+        /* Chat Interface Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+
+        .chat-toggle {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .chat-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 380px;
+            max-height: 500px;
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-xl);
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .chat-panel.active {
+            display: flex;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin: 0;
+        }
+
+        .chat-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .chat-close:hover {
+            color: var(--dark-gray);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 300px;
+        }
+
+        .chat-message {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .chat-message.user {
+            background: var(--primary-blue);
+            color: white;
+            margin-left: 40px;
+            align-self: flex-end;
+        }
+
+        .chat-message.assistant {
+            background: var(--bg-light);
+            color: var(--text-primary);
+            margin-right: 40px;
+            align-self: flex-start;
+        }
+
+        .chat-input-container {
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(46, 134, 171, 0.1);
+        }
+
+        .chat-send {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chat-send:hover {
+            background: #246a8a;
+        }
+
+        .chat-send:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Loading Skeleton */
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+            height: 20px;
+            margin-bottom: 8px;
+        }
+
+        @keyframes loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -355,6 +788,55 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Transaction animation */
+        .transaction-row {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Pulse animation for important values */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Smooth number transitions */
+        .metric-value {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         /* Responsivo */
@@ -366,14 +848,85 @@
                 align-items: flex-start;
             }
             
+            .header-left {
+                width: 100%;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
             .content {
                 padding: 16px 20px;
+            }
+            
+            .tabs {
+                gap: 16px;
+                padding-bottom: 8px;
+            }
+            
+            .tab {
+                padding: 8px 0;
+                font-size: 0.813rem;
+            }
+            
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metric-value {
+                font-size: 1.5rem;
             }
             
             .auth-section {
                 margin: 40px 20px;
                 padding: 24px;
             }
+            
+            table {
+                font-size: 0.75rem;
+            }
+            
+            th, td {
+                padding: 8px 12px;
+            }
+
+            .chat-panel {
+                width: calc(100vw - 40px);
+                right: -24px;
+            }
+        }
+        
+        /* Utilitários */
+        .text-center { text-align: center; }
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+        
+        /* Focus visible para acessibilidade */
+        :focus-visible {
+            outline: 2px solid var(--primary-blue);
+            outline-offset: 2px;
         }
     </style>
 </head>
@@ -382,6 +935,16 @@
     <div id="authContainer" class="container">
         <div class="header">
             <div class="header-left">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="60" width="15" height="30" fill="#718096"/>
+                        <rect x="30" y="40" width="15" height="50" fill="#4A5568"/>
+                        <rect x="50" y="50" width="15" height="40" fill="#4A5568"/>
+                        <rect x="70" y="30" width="15" height="60" fill="#2E86AB"/>
+                        <path d="M 5 55 L 45 15 L 50 20 L 10 60 Z" fill="#2E86AB"/>
+                        <polygon points="45,15 55,15 50,5" fill="#2E86AB"/>
+                    </svg>
+                </div>
                 <div>
                     <h1>VitexAI</h1>
                     <p>Financial Intelligence Dashboard</p>
@@ -414,9 +977,6 @@
                 </button>
                 <button class="btn btn-secondary" onclick="resetPassword()">
                     Forgot Password?
-                </button>
-                <button class="btn btn-success" onclick="loadDemoMode()">
-                    🎮 Try Demo Mode
                 </button>
             </div>
             
@@ -474,6 +1034,16 @@
     <div id="mainContainer" class="container" style="display: none;">
         <div class="header">
             <div class="header-left">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="10" y="60" width="15" height="30" fill="#718096"/>
+                        <rect x="30" y="40" width="15" height="50" fill="#4A5568"/>
+                        <rect x="50" y="50" width="15" height="40" fill="#4A5568"/>
+                        <rect x="70" y="30" width="15" height="60" fill="#2E86AB"/>
+                        <path d="M 5 55 L 45 15 L 50 20 L 10 60 Z" fill="#2E86AB"/>
+                        <polygon points="45,15 55,15 50,5" fill="#2E86AB"/>
+                    </svg>
+                </div>
                 <div>
                     <h1>VitexAI Dashboard</h1>
                     <p>Financial Intelligence & Analytics</p>
@@ -486,281 +1056,2083 @@
         </div>
         
         <div class="content">
+            <div id="alertsContainer"></div>
+            <div id="systemAlerts"></div>
+            
             <div class="tabs">
-                <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
-                <button class="tab" onclick="showTab('transactions')">Transactions</button>
-                <button class="tab" onclick="showTab('analytics')">Analytics</button>
-                <button class="tab" onclick="showTab('reports')">Reports</button>
-                <button class="tab" onclick="showTab('settings')">Settings</button>
+                <button class="tab active" onclick="showTab('lancamentos')">Transactions</button>
+                <button class="tab" onclick="showTab('aggregated')">Dashboard</button>
+                <button class="tab" onclick="showTab('trends')">Trends</button>
+                <button class="tab" onclick="showTab('projections')">Projections</button>
+                <button class="tab" onclick="showTab('charts')">Analytics</button>
+                <button class="tab" onclick="showTab('relatorios')">Reports</button>
+                <button class="tab" onclick="showTab('configuracoes')">Settings</button>
             </div>
             
-            <div id="dashboard" class="tab-content active">
-                <h2>Welcome to VitexAI Dashboard</h2>
-                <p>Your financial intelligence platform is ready!</p>
+            <!-- Tab 1: Lançamentos -->
+            <div id="lancamentos" class="tab-content active">
+                <div class="quick-add-section">
+                    <h3>Quick Transaction Entry</h3>
+                    <form onsubmit="event.preventDefault(); adicionarLancamento();" style="margin: 0;">
+                        <div class="input-grid">
+                            <div class="input-group">
+                                <label>Date</label>
+                                <input type="date" id="quickDate" value="" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Type</label>
+                                <select id="quickTipo" required>
+                                    <option value="receita">Revenue</option>
+                                    <option value="despesa">Expense</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Category</label>
+                                <select id="quickCategoria" required>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Amount (R$)</label>
+                                <input type="number" id="quickValor" step="0.01" placeholder="0.00" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <input type="text" id="quickDescricao" placeholder="Transaction description" required>
+                            </div>
+                            <div class="input-group" style="display: flex; align-items: end;">
+                                <button type="submit" class="btn btn-success" id="btnAdicionar">
+                                    Add Transaction
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 
-                <div style="margin-top: 20px;">
-                    <div class="alert alert-success">
-                        ✅ System is running in <strong id="modeDisplay">Demo</strong> mode
+                <div class="table-container">
+                    <h3>Transaction History</h3>
+                    <div style="padding: 0 24px 20px;">
+                        <button class="btn" onclick="sincronizarDados()" style="padding: 8px 16px; width: auto;" id="btnSincronizar">
+                            Sync Data
+                        </button>
+                        <button class="btn btn-secondary" onclick="importarDadosExemplo()" style="padding: 8px 16px; width: auto; margin-left: 10px;">
+                            Load Sample Data
+                        </button>
+                    </div>
+                    <table id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactionsBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Tab 2: Indicadores Agregados -->
+            <div id="aggregated" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    Overall Performance Metrics
+                </h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Total Revenue</div>
+                        <div class="metric-value" id="receitaAcumulada">R$ 0.00</div>
+                        <div class="metric-trend" id="receitaTrend"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Total Expenses</div>
+                        <div class="metric-value" id="despesasAcumuladas">R$ 0.00</div>
+                        <div class="metric-trend" id="despesasTrend"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Net Result</div>
+                        <div class="metric-value" id="resultadoAcumulado">R$ 0.00</div>
+                        <div class="metric-trend" id="resultadoTrend"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Average Margin</div>
+                        <div class="metric-value" id="margemMedia">0%</div>
+                        <div class="metric-trend" id="margemTrend"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Monthly Revenue Avg</div>
+                        <div class="metric-value" id="receitaMedia">R$ 0.00</div>
+                        <div class="metric-trend" id="receitaMediaTrend"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Average Burn Rate</div>
+                        <div class="metric-value" id="burnrateMedia">R$ 0.00</div>
+                        <div class="metric-trend" id="burnrateTrend"></div>
                     </div>
                 </div>
                 
-                <div style="margin-top: 20px;">
-                    <h3>Quick Stats</h3>
-                    <p>Total Revenue: <strong>R$ 50,000.00</strong></p>
-                    <p>Total Expenses: <strong>R$ 35,000.00</strong></p>
-                    <p>Net Result: <strong style="color: var(--success)">R$ 15,000.00</strong></p>
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px; margin-top: 40px;">
+                    Revenue Mix Analysis
+                </h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Consulting</div>
+                        <div class="metric-value" id="mixConsultoria">0%</div>
+                        <div class="metric-trend" id="consultoriaValue">R$ 0.00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Development</div>
+                        <div class="metric-value" id="mixDesenvolvimento">0%</div>
+                        <div class="metric-trend" id="desenvolvimentoValue">R$ 0.00</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Other Revenue</div>
+                        <div class="metric-value" id="mixOutras">0%</div>
+                        <div class="metric-trend" id="outrasValue">R$ 0.00</div>
+                    </div>
+                </div>
+                
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px; margin-top: 40px;">
+                    Operational Efficiency
+                </h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Cumulative ROI</div>
+                        <div class="metric-value" id="roiAcumulado">0%</div>
+                        <div class="metric-trend">Revenue/Expense Ratio</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Tax Burden</div>
+                        <div class="metric-value" id="cargaTributaria">0%</div>
+                        <div class="metric-trend">Taxes/Revenue</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Fixed Costs %</div>
+                        <div class="metric-value" id="custosFixes">0%</div>
+                        <div class="metric-trend">Salaries + Subscriptions</div>
+                    </div>
                 </div>
             </div>
             
-            <div id="transactions" class="tab-content">
-                <h2>Transactions</h2>
-                <p>Manage your financial transactions here.</p>
+            <!-- Tab 3: Tendências -->
+            <div id="trends" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    Trend Analysis
+                </h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Average MoM Growth</div>
+                        <div class="metric-value" id="crescimentoMedio">0%</div>
+                        <div class="metric-trend">Monthly revenue</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Revenue Volatility</div>
+                        <div class="metric-value" id="volatilidadeReceita">0%</div>
+                        <div class="metric-trend">Coefficient of variation</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Positive Months</div>
+                        <div class="metric-value" id="mesesPositivos">0</div>
+                        <div class="metric-trend" id="percentualPositivos"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Best Result</div>
+                        <div class="metric-value" id="maiorResultado">R$ 0.00</div>
+                        <div class="metric-trend" id="maiorResultadoMes"></div>
+                    </div>
+                </div>
+                
+                <div class="chart-container" style="height: auto;">
+                    <h4>Monthly Evolution</h4>
+                    <canvas id="trendsChart" width="400" height="200"></canvas>
+                </div>
+                
+                <div class="table-container">
+                    <h4>Monthly Detailed Analysis</h4>
+                    <table id="trendsTable">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Revenue</th>
+                                <th>Expenses</th>
+                                <th>Result</th>
+                                <th>MoM Growth</th>
+                                <th>Margin</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trendsTableBody">
+                        </tbody>
+                    </table>
+                </div>
             </div>
             
-            <div id="analytics" class="tab-content">
-                <h2>Analytics</h2>
-                <p>View detailed financial analytics and charts.</p>
+            <!-- Tab 4: Projeções -->
+            <div id="projections" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    Projections & Goals
+                </h3>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">Projected Revenue (Next Month)</div>
+                        <div class="metric-value" id="receitaProjetada">R$ 0.00</div>
+                        <div class="metric-trend">Based on moving average</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Monthly Break-even</div>
+                        <div class="metric-value" id="breakEven">R$ 0.00</div>
+                        <div class="metric-trend">Average monthly expenses</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Runway (Months)</div>
+                        <div class="metric-value" id="runway">0</div>
+                        <div class="metric-trend" id="runwayTrend">With average result</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">Target Margin</div>
+                        <div class="metric-value">20%</div>
+                        <div class="metric-trend" id="metaMargem">Recommended target</div>
+                    </div>
+                </div>
+                
+                <div class="input-section">
+                    <h4>Scenario Simulator</h4>
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label>Monthly Revenue Target (R$)</label>
+                            <input type="number" id="metaReceita" step="1000" placeholder="Ex: 20000">
+                        </div>
+                        <div class="input-group">
+                            <label>Expense Increase %</label>
+                            <input type="number" id="aumentoDespesas" step="5" placeholder="Ex: 10" value="0">
+                        </div>
+                        <div class="input-group">
+                            <label>Available Cash (R$)</label>
+                            <input type="number" id="caixaDisponivel" step="1000" placeholder="Ex: 50000" value="50000">
+                        </div>
+                    </div>
+                    <button class="btn" onclick="calcularCenario()">Calculate Scenario</button>
+                    
+                    <div id="cenarioResult" style="margin-top: 20px;"></div>
+                </div>
             </div>
             
-            <div id="reports" class="tab-content">
-                <h2>Reports</h2>
-                <p>Generate and export financial reports.</p>
+            <!-- Tab 5: Gráficos -->
+            <div id="charts" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    Analytics & Visualizations
+                </h3>
+                
+                <div class="chart-container" style="height: auto;">
+                    <h4>Monthly Evolution - Revenue vs Expenses</h4>
+                    <canvas id="evolutionChart" width="400" height="150"></canvas>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px;">
+                    <div class="chart-container" style="height: auto;">
+                        <h4>Revenue Distribution</h4>
+                        <canvas id="revenueChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="chart-container" style="height: auto;">
+                        <h4>Expense Distribution</h4>
+                        <canvas id="expenseChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                
+                <div class="chart-container" style="height: auto;">
+                    <h4>Margin Evolution (%)</h4>
+                    <canvas id="marginChart" width="400" height="200"></canvas>
+                </div>
             </div>
             
-            <div id="settings" class="tab-content">
-                <h2>Settings</h2>
-                <p>Configure your dashboard preferences.</p>
+            <!-- Tab 6: Relatórios -->
+            <div id="relatorios" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    Reports & Export
+                </h3>
+                
+                <div class="input-section">
+                    <h4>Export Data</h4>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn" onclick="exportarCSV()" style="width: auto;">
+                            Export to CSV
+                        </button>
+                        <button class="btn" onclick="exportarJSON()" style="width: auto;">
+                            Backup to JSON
+                        </button>
+                        <button class="btn btn-secondary" onclick="gerarRelatorioMensal()" style="width: auto;">
+                            Monthly Report
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="relatorioContainer" style="margin-top: 20px;"></div>
+            </div>
+            
+            <!-- Tab 7: Configurações -->
+            <div id="configuracoes" class="tab-content">
+                <h3 class="font-semibold" style="font-size: 1.25rem; color: var(--dark-gray); margin-bottom: 24px;">
+                    System Settings
+                </h3>
+                
+                <div class="input-section">
+                    <h4>User Profile</h4>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-title">Email</div>
+                            <div class="metric-value" id="profileEmail" style="font-size: 1.125rem;">-</div>
+                            <div class="metric-trend">Authenticated user</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Status</div>
+                            <div class="metric-value" style="color: var(--success);">● Online</div>
+                            <div class="metric-trend">Active session</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-title">Data</div>
+                            <div class="metric-value" id="userDataCount">0</div>
+                            <div class="metric-trend">Transactions recorded</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-danger" onclick="logoutUser()">
+                        Sign Out
+                    </button>
+                </div>
+                
+                <div class="input-section">
+                    <h4>Advanced Settings</h4>
+                    <p>Coming soon: custom categories, automatic goals, bank integration.</p>
+                </div>
+                
+                <div class="input-section">
+                    <h4>Database Structure</h4>
+                    <div class="alert alert-info">
+                        <strong>Important:</strong> If you're getting 'user_id' errors, use the SIMPLE structure below:
+                    </div>
+                    
+                    <h5 style="margin-top: 20px; margin-bottom: 12px; color: var(--dark-gray);">Option 1 - SIMPLE Structure (recommended to start):</h5>
+                    <pre style="background: var(--bg-light); padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 0.875rem;">
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    data DATE NOT NULL,
+    tipo VARCHAR(10) NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    descricao TEXT,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Optional: Create index for better performance
+CREATE INDEX idx_transactions_data ON transactions(data DESC);</pre>
+                    
+                    <h5 style="margin-top: 20px; margin-bottom: 12px; color: var(--dark-gray);">Option 2 - COMPLETE Structure (with user isolation):</h5>
+                    <pre style="background: var(--bg-light); padding: 16px; border-radius: 8px; overflow-x: auto; font-size: 0.875rem;">
+CREATE TABLE transactions (
+    id SERIAL PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id),
+    data DATE NOT NULL,
+    tipo VARCHAR(10) NOT NULL,
+    categoria VARCHAR(50) NOT NULL,
+    valor DECIMAL(10,2) NOT NULL,
+    descricao TEXT,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE transactions ENABLE ROW LEVEL SECURITY;
+
+-- Create policy
+CREATE POLICY "Users can only see own transactions" 
+ON transactions FOR ALL 
+USING (auth.uid() = user_id);</pre>
+                    
+                    <button class="btn btn-secondary" onclick="copyToClipboard('simple')" style="width: auto;">
+                        Copy Simple Structure
+                    </button>
+                    <button class="btn btn-secondary" onclick="copyToClipboard('complete')" style="width: auto; margin-left: 10px;">
+                        Copy Complete Structure
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>VitexAI</strong> - Financial Intelligence Dashboard</p>
+            <p style="font-size: 0.75rem; margin-top: 4px;">Version 3.0 | Advanced Analytics | Real-time Insights</p>
+        </div>
+    </div>
+
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget" style="display: none;">
+        <button class="chat-toggle" onclick="toggleChat()">
+            💬 Ask the Data
+        </button>
+        <div class="chat-panel" id="chatPanel">
+            <div class="chat-header">
+                <h3>VitexAI Assistant</h3>
+                <button class="chat-close" onclick="toggleChat()">×</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message assistant">
+                    Hi! I can help you analyze your financial data. Try asking:
+                    <br><br>
+                    • "What was my biggest expense this month?"<br>
+                    • "Show me revenue trends"<br>
+                    • "How is my margin evolving?"<br>
+                    • "What's my current financial health?"
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask about your data..." onkeypress="handleChatKeyPress(event)">
+                <button class="chat-send" onclick="sendChatMessage()" id="chatSendBtn">Send</button>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================
-        // INÍCIO DO CÓDIGO JAVASCRIPT
-        // ============================================
-        
         console.log('🚀 VitexAI iniciando...');
-        
+
         // Variáveis globais
         let supabase = null;
         let currentUser = null;
+        let transactions = [];
+        let categories = {
+            receita: ['Consultoria', 'Desenvolvimento', 'Licenciamento', 'Outras'],
+            despesa: ['Pró-labore', 'Impostos', 'Terceiros', 'Desenvolvedores', 'Assinaturas', 'Marketing', 'Outras']
+        };
+        let charts = {};
         let demoMode = false;
-        
-        // ============================================
-        // FUNÇÕES PRINCIPAIS
-        // ============================================
-        
+        let lastTransactionTime = 0;
+        let updateDashboardTimeout = null;
+        let chatOpen = false;
+
+        // Definir e expor funções críticas imediatamente
         function showAuthTab(tabName) {
-            console.log('🔄 Alternando para tab:', tabName);
+            document.querySelectorAll('.auth-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(form => form.classList.remove('active'));
             
-            // Esconder todos os forms
-            document.querySelectorAll('.auth-form').forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // Remover active de todas as tabs
-            document.querySelectorAll('.auth-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Mostrar o form selecionado
-            let formId = '';
-            if (tabName === 'login') formId = 'loginForm';
-            else if (tabName === 'register') formId = 'registerForm';
-            else if (tabName === 'setup') formId = 'setupForm';
-            
-            const form = document.getElementById(formId);
-            if (form) {
-                form.classList.add('active');
+            if (tabName !== 'setup') {
+                const tabButton = document.querySelector(`.auth-tab[onclick="showAuthTab('${tabName}')"]`);
+                if (tabButton) tabButton.classList.add('active');
             }
             
-            // Ativar a tab (exceto setup que não tem tab visual)
-            if (tabName !== 'setup') {
-                const tabs = document.querySelectorAll('.auth-tab');
-                tabs.forEach(tab => {
-                    if (tab.textContent.toLowerCase().includes(tabName)) {
-                        tab.classList.add('active');
+            const form = document.getElementById(tabName === 'login' ? 'loginForm' : 
+                                               tabName === 'register' ? 'registerForm' : 'setupForm');
+            if (form) form.classList.add('active');
+            
+            if (tabName === 'login') {
+                const emailField = document.getElementById('loginEmail');
+                const passwordField = document.getElementById('loginPassword');
+                
+                if (emailField && emailField.value.includes('supabase.co')) {
+                    emailField.value = '';
+                }
+                if (passwordField) {
+                    passwordField.value = '';
+                }
+            }
+        }
+
+        // Modo demonstração
+        function loadDemoMode() {
+            demoMode = true;
+            currentUser = { email: 'demo@vitexai.com' };
+            showMainApp();
+            showNotification('🎮 Modo demonstração ativado!', 'info');
+            setTimeout(() => importarDadosExemplo(), 500);
+        }
+
+        // Expor funções críticas globalmente IMEDIATAMENTE
+        window.showAuthTab = showAuthTab;
+        window.loadDemoMode = loadDemoMode;
+
+        // Aguardar Supabase carregar
+        function waitForSupabase(callback) {
+            if (window.supabase && window.supabase.createClient) {
+                console.log('✅ Supabase disponível');
+                callback();
+            } else {
+                console.log('⏳ Aguardando Supabase carregar...');
+                setTimeout(() => waitForSupabase(callback), 100);
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 DOM carregado, aguardando Supabase...');
+            
+            waitForSupabase(() => {
+                console.log('✅ Supabase carregado!');
+                
+                if (!window.supabase || !window.supabase.createClient) {
+                    console.error('❌ Biblioteca Supabase não carregada corretamente!');
+                    showAuthAlert('❌ Erro ao carregar bibliotecas. Recarregue a página.', 'danger');
+                    return;
+                }
+                
+                console.log('✅ Biblioteca Supabase verificada');
+                initializeApp();
+            });
+        });
+
+        // Função principal de inicialização
+        function initializeApp() {
+            console.log('🚀 Inicializando VitexAI...');
+            checkStoredCredentials();
+            setupDefaults();
+            setupEventListeners();
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.onclick = loginUser;
+                console.log('✅ Botão de login configurado');
+            }
+            
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.onclick = registerUser;
+                console.log('✅ Botão de registro configurado');
+            }
+            
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        loginUser();
                     }
                 });
             }
         }
-        
-        function loadDemoMode() {
-            console.log('🎮 Ativando modo demo...');
-            demoMode = true;
-            currentUser = { email: 'demo@vitexai.com' };
-            showMainApp();
-            showNotification('🎮 Demo mode activated!', 'success');
-        }
-        
-        function showMainApp() {
-            console.log('🏠 Mostrando app principal...');
+
+        // Verificar credenciais armazenadas
+        function checkStoredCredentials() {
+            console.log('🔍 Verificando credenciais armazenadas...');
             
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('mainContainer').style.display = 'block';
+            const url = localStorage.getItem('vitexai_supabase_url');
+            const key = localStorage.getItem('vitexai_supabase_key');
             
-            // Atualizar info do usuário
-            if (currentUser) {
-                const email = currentUser.email || 'demo@vitexai.com';
-                document.getElementById('userEmail').textContent = email;
-                document.getElementById('userInfo').style.display = 'block';
-                document.getElementById('modeDisplay').textContent = demoMode ? 'Demo' : 'Live';
-            }
-        }
-        
-        function showAuthApp() {
-            console.log('🔐 Voltando para tela de auth...');
-            
-            document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('mainContainer').style.display = 'none';
-            clearAuthForms();
-        }
-        
-        function showTab(tabName) {
-            console.log('📑 Alternando para tab:', tabName);
-            
-            // Esconder todas as tabs de conteúdo
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.classList.remove('active');
+            console.log('📊 Credenciais encontradas:', { 
+                hasUrl: !!url, 
+                hasKey: !!key,
+                urlLength: url?.length,
+                keyLength: key?.length 
             });
             
-            // Remover active de todos os botões
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Mostrar a tab selecionada
-            const content = document.getElementById(tabName);
-            if (content) {
-                content.classList.add('active');
-            }
-            
-            // Ativar o botão
-            event.target.classList.add('active');
-        }
-        
-        function showAuthAlert(message, type) {
-            const container = document.getElementById('authAlerts');
-            if (container) {
-                container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
-                setTimeout(() => {
-                    container.innerHTML = '';
-                }, 5000);
+            if (url && key) {
+                console.log('✅ Credenciais encontradas, inicializando...');
+                const setupUrlField = document.getElementById('setupSupabaseUrl');
+                const setupKeyField = document.getElementById('setupSupabaseKey');
+                
+                if (setupUrlField) setupUrlField.value = url;
+                if (setupKeyField) setupKeyField.value = key;
+                
+                initializeSupabase(url, key);
+            } else {
+                console.log('ℹ️ Nenhuma credencial encontrada, mostrando setup');
+                showAuthTab('setup');
+                showAuthAlert('First time? Use Demo Mode or configure Supabase with the SIMPLE structure (without user_id)', 'info');
             }
         }
-        
-        function showNotification(message, type) {
-            console.log(`[${type}] ${message}`);
+
+        // Configuração inicial
+        function setupDefaults() {
+            console.log('📅 Configurando defaults...');
             
-            const notification = document.createElement('div');
-            notification.className = `alert alert-${type}`;
-            notification.innerHTML = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 1000;
-                max-width: 400px;
-                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            `;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 4000);
-        }
-        
-        function clearAuthForms() {
-            ['loginEmail', 'loginPassword', 'registerName', 'registerEmail', 'registerPassword', 'confirmPassword'].forEach(id => {
-                const field = document.getElementById(id);
-                if (field) field.value = '';
-            });
-        }
-        
-        // ============================================
-        // FUNÇÕES DE AUTENTICAÇÃO
-        // ============================================
-        
-        async function loginUser() {
-            console.log('🔐 Tentando fazer login...');
-            
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!email || !password) {
-                showAuthAlert('Please fill in all fields', 'danger');
-                return;
-            }
-            
-            // Para teste, aceitar qualquer login
-            if (email && password) {
-                currentUser = { email: email };
-                showAuthAlert('✅ Login successful!', 'success');
-                setTimeout(() => showMainApp(), 500);
+            const today = new Date();
+            const quickDate = document.getElementById('quickDate');
+            if (quickDate) {
+                const year = today.getFullYear();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                quickDate.value = `${year}-${month}-${day}`;
+                console.log('✅ Data padrão configurada:', quickDate.value);
+            } else {
+                console.log('ℹ️ Campo de data não encontrado (normal na tela de login)');
             }
         }
-        
-        async function registerUser() {
-            showAuthAlert('Registration will be implemented soon', 'info');
-        }
-        
-        async function resetPassword() {
-            showAuthAlert('Password reset will be implemented soon', 'info');
-        }
-        
+
+        // Configurar conexão inicial
         async function setupConnection() {
             const url = document.getElementById('setupSupabaseUrl').value.trim();
             const key = document.getElementById('setupSupabaseKey').value.trim();
             
             if (!url || !key) {
-                showAuthAlert('Please fill in all fields', 'danger');
+                showAuthAlert('❌ Preencha a URL e API Key do Supabase', 'danger');
                 return;
             }
             
-            // Simular conexão bem-sucedida
-            showAuthAlert('✅ Connection configured! Now login or use demo mode.', 'success');
-            showAuthTab('login');
+            try {
+                showAuthAlert('🔄 Testando conexão...', 'info');
+                
+                const testSupabase = window.supabase.createClient(url, key);
+                const { data, error } = await testSupabase.from('transactions').select('count', { count: 'exact', head: true });
+                
+                if (error) {
+                    if (error.code === 'PGRST116' || error.message.includes('not exist')) {
+                        showAuthAlert('⚠️ Tabela não encontrada. Crie a tabela "transactions" no Supabase usando a estrutura SIMPLES (disponível nas Configurações)', 'warning');
+                    } else if (error.message.includes('user_id')) {
+                        showAuthAlert('⚠️ Erro de user_id detectado. Use a estrutura SIMPLES da tabela (sem user_id)', 'warning');
+                    } else {
+                        throw new Error(`Erro na conexão: ${error.message}`);
+                    }
+                }
+                
+                localStorage.setItem('vitexai_supabase_url', url);
+                localStorage.setItem('vitexai_supabase_key', key);
+                
+                initializeSupabase(url, key);
+                
+                if (!error) {
+                    showAuthAlert('✅ Conexão configurada com sucesso! Agora faça login.', 'success');
+                } else {
+                    showAuthAlert('✅ Conexão salva! Crie a tabela no Supabase e faça login.', 'success');
+                }
+                
+                showAuthTab('login');
+                
+            } catch (error) {
+                console.error('Erro ao configurar:', error);
+                showAuthAlert(`❌ Erro: ${error.message}`, 'danger');
+            }
         }
-        
-        function logoutUser() {
+
+        // Testar conexão manualmente
+        async function testConnection() {
+            const url = document.getElementById('setupSupabaseUrl').value.trim();
+            const key = document.getElementById('setupSupabaseKey').value.trim();
+            
+            if (!url || !key) {
+                showAuthAlert('❌ Preencha a URL e API Key primeiro', 'danger');
+                return;
+            }
+            
+            try {
+                showAuthAlert('🔄 Testando conexão detalhadamente...', 'info');
+                
+                console.log('Teste 1: Criando cliente Supabase...');
+                const testClient = window.supabase.createClient(url, key);
+                
+                if (!testClient) {
+                    throw new Error('Falha ao criar cliente');
+                }
+                
+                console.log('Teste 2: Verificando sistema de autenticação...');
+                const { data: authData, error: authError } = await testClient.auth.getSession();
+                
+                if (authError) {
+                    console.error('Erro de autenticação:', authError);
+                }
+                
+                console.log('Teste 3: Verificando acesso ao banco de dados...');
+                const { data: tableData, error: tableError } = await testClient
+                    .from('transactions')
+                    .select('*')
+                    .limit(1);
+                
+                let status = '📊 Resultado dos Testes:\n\n';
+                status += '✅ Cliente Supabase: OK\n';
+                status += authError ? '❌ Autenticação: ' + authError.message + '\n' : '✅ Autenticação: OK\n';
+                
+                if (tableError) {
+                    if (tableError.message.includes('not exist')) {
+                        status += '⚠️ Tabela: Não existe (crie usando a estrutura nas Configurações)\n';
+                    } else if (tableError.message.includes('JWT')) {
+                        status += '❌ API Key: Chave inválida ou expirada\n';
+                    } else {
+                        status += '❌ Banco de dados: ' + tableError.message + '\n';
+                    }
+                } else {
+                    status += '✅ Banco de dados: OK\n';
+                }
+                
+                console.log(status);
+                alert(status);
+                
+            } catch (error) {
+                console.error('Erro no teste:', error);
+                showAuthAlert(`❌ Erro no teste: ${error.message}`, 'danger');
+            }
+        }
+
+        // Inicializar Supabase
+        async function initializeSupabase(url, key) {
+            try {
+                console.log('🚀 Inicializando Supabase com:', { url, keyLength: key?.length });
+                
+                supabase = window.supabase.createClient(url, key);
+                
+                if (!supabase) {
+                    throw new Error('Falha ao criar cliente Supabase');
+                }
+                
+                console.log('✅ Cliente Supabase criado');
+                
+                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+                
+                console.log('🔍 Verificando sessão existente:', { session, sessionError });
+                
+                if (sessionError) {
+                    console.error('Erro ao verificar sessão:', sessionError);
+                }
+                
+                if (session) {
+                    console.log('✅ Sessão encontrada:', session.user.email);
+                    currentUser = session.user;
+                    showMainApp();
+                } else {
+                    console.log('ℹ️ Nenhuma sessão ativa');
+                    if (url && key) {
+                        showAuthTab('login');
+                    }
+                }
+                
+                supabase.auth.onAuthStateChange((event, session) => {
+                    console.log('🔄 Auth state changed:', event, session?.user?.email);
+                    
+                    if (event === 'SIGNED_IN' && session) {
+                        currentUser = session.user;
+                        showMainApp();
+                    } else if (event === 'SIGNED_OUT') {
+                        currentUser = null;
+                        showAuthApp();
+                    }
+                });
+                
+            } catch (error) {
+                console.error('❌ Erro ao inicializar Supabase:', error);
+                showAuthAlert('❌ Erro na inicialização: ' + error.message, 'danger');
+            }
+        }
+
+        // Login do usuário
+        async function loginUser() {
+            console.log('🔐 Função loginUser chamada');
+            
+            if (!window.supabase) {
+                console.error('❌ Supabase não está carregado!');
+                alert('Erro: Sistema ainda carregando. Por favor, aguarde e tente novamente.');
+                location.reload();
+                return;
+            }
+            
+            const email = document.getElementById('loginEmail')?.value.trim();
+            const password = document.getElementById('loginPassword')?.value;
+            
+            console.log('🔐 Tentando login com:', email);
+            
+            if (!email || !password) {
+                showAuthAlert('❌ Preencha email e senha', 'danger');
+                return;
+            }
+            
+            if (!supabase) {
+                console.error('❌ Supabase não inicializado');
+                showAuthAlert('❌ Configure a conexão primeiro', 'danger');
+                showAuthTab('setup');
+                return;
+            }
+            
+            try {
+                const btn = document.getElementById('loginBtn');
+                if (btn) {
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="loading"></span> Entrando...';
+                }
+                
+                console.log('📡 Enviando requisição para Supabase...');
+                
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+                
+                console.log('📊 Resposta do Supabase:', { data, error });
+                
+                if (error) throw error;
+                
+                if (data.user) {
+                    console.log('✅ Login bem-sucedido:', data.user.email);
+                    showAuthAlert('✓ Login successful!', 'success');
+                    currentUser = data.user;
+                    setTimeout(() => showMainApp(), 500);
+                } else {
+                    throw new Error('Login retornou sem erro mas sem usuário');
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro completo no login:', error);
+                
+                let errorMessage = error.message;
+                
+                if (error.message.includes('Invalid login credentials')) {
+                    errorMessage = 'Email ou senha incorretos';
+                } else if (error.message.includes('Email not confirmed')) {
+                    errorMessage = 'Email não confirmado. Verifique sua caixa de entrada';
+                } else if (error.message.includes('Network')) {
+                    errorMessage = 'Erro de conexão. Verifique sua internet';
+                }
+                
+                showAuthAlert(`❌ ${errorMessage}`, 'danger');
+            } finally {
+                const btn = document.getElementById('loginBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = 'Sign In';
+                }
+            }
+        }
+
+        // Cadastro do usuário
+        async function registerUser() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (!name || !email || !password || !confirmPassword) {
+                showAuthAlert('❌ Preencha todos os campos', 'danger');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAuthAlert('❌ Senhas não coincidem', 'danger');
+                return;
+            }
+            
+            if (password.length < 8) {
+                showAuthAlert('❌ Senha deve ter pelo menos 8 caracteres', 'danger');
+                return;
+            }
+            
+            if (!supabase) {
+                showAuthAlert('❌ Configure a conexão primeiro', 'danger');
+                showAuthTab('setup');
+                return;
+            }
+            
+            try {
+                const btn = document.getElementById('registerBtn');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading"></span> Criando conta...';
+                
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: name,
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                
+                if (data.user && !data.session) {
+                    showAuthAlert('📧 Verifique seu email para confirmar a conta', 'info');
+                    showAuthTab('login');
+                } else {
+                    showAuthAlert('✅ Conta criada com sucesso!', 'success');
+                }
+                
+            } catch (error) {
+                console.error('Erro no cadastro:', error);
+                showAuthAlert(`❌ ${error.message}`, 'danger');
+            } finally {
+                const btn = document.getElementById('registerBtn');
+                btn.disabled = false;
+                btn.innerHTML = '🚀 Criar Conta VitexAI';
+            }
+        }
+
+        // Reset de senha
+        async function resetPassword() {
+            const email = document.getElementById('loginEmail').value.trim();
+            
+            if (!email) {
+                showAuthAlert('❌ Digite seu email primeiro', 'danger');
+                return;
+            }
+            
+            if (!supabase) {
+                showAuthAlert('❌ Configure a conexão primeiro', 'danger');
+                return;
+            }
+            
+            try {
+                const { error } = await supabase.auth.resetPasswordForEmail(email);
+                
+                if (error) throw error;
+                
+                showAuthAlert('📧 Email de recuperação enviado!', 'success');
+                
+            } catch (error) {
+                console.error('Erro no reset:', error);
+                showAuthAlert(`❌ ${error.message}`, 'danger');
+            }
+        }
+
+        // Logout do usuário
+        async function logoutUser() {
             if (confirm('Are you sure you want to sign out?')) {
-                currentUser = null;
-                demoMode = false;
-                showAuthApp();
-                showNotification('Signed out successfully', 'info');
+                try {
+                    if (!demoMode && supabase) {
+                        const { error } = await supabase.auth.signOut();
+                        if (error) throw error;
+                    }
+                    
+                    transactions = [];
+                    currentUser = null;
+                    demoMode = false;
+                    
+                    showAuthApp();
+                    showNotification('Signed out successfully!', 'info');
+                    
+                } catch (error) {
+                    console.error('Logout error:', error);
+                    showNotification(`Error: ${error.message}`, 'danger');
+                }
             }
         }
-        
-        // ============================================
-        // INICIALIZAÇÃO
-        // ============================================
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ DOM carregado, app pronto!');
+
+        // Mostrar app principal
+        function showMainApp() {
+            console.log('🏠 Mostrando app principal...');
             
-            // Verificar se tem Supabase
-            if (window.supabase && window.supabase.createClient) {
-                console.log('✅ Supabase disponível');
-            } else {
-                console.log('⚠️ Supabase não carregado, mas app funcionará em modo limitado');
+            const authContainer = document.getElementById('authContainer');
+            const mainContainer = document.getElementById('mainContainer');
+            const chatWidget = document.getElementById('chatWidget');
+            
+            if (!mainContainer) {
+                console.error('❌ mainContainer não encontrado!');
+                return;
             }
             
-            // Mostrar tab de login por padrão
-            showAuthTab('login');
-        });
-        
-        // Expor funções globalmente para os botões funcionarem
-        window.showAuthTab = showAuthTab;
-        window.loadDemoMode = loadDemoMode;
-        window.loginUser = loginUser;
-        window.registerUser = registerUser;
-        window.resetPassword = resetPassword;
-        window.setupConnection = setupConnection;
-        window.logoutUser = logoutUser;
-        window.showTab = showTab;
-        
-        console.log('✅ VitexAI carregado e pronto!');
-    </script>
-</body>
-</html>
+            authContainer.style.display = 'none';
+            mainContainer.style.display = 'block';
+            chatWidget.style.display = 'block';
+            
+            console.log('✅ Containers alternados');
+            
+            const userInfo = document.getElementById('userInfo');
+            const userEmail = document.getElementById('userEmail');
+            const profileEmail = document.getElementById('profileEmail');
+            
+            if (currentUser) {
+                const email = currentUser.email || 'demo@vitexai.com';
+                console.log('👤 Usuário logado:', email);
+                
+                if (userEmail) userEmail.textContent = email;
+                if (profileEmail) profileEmail.textContent = email;
+                if (userInfo) userInfo.style.display = 'block';
+            }
+            
+            checkDatabaseStructure();
+            
+            setTimeout(() => {
+                console.log('📊 Carregando dados...');
+                setupDefaults();
+                updateCategories();
+                if (!demoMode) {
+                    loadCategories();
+                    sincronizarDados();
+                } else {
+                    setupDefaults();
+                }
+            }, 100);
+        }
+
+        // Verificar estrutura do banco
+        async function checkDatabaseStructure() {
+            if (!supabase || demoMode) return;
+            
+            const systemAlerts = document.getElementById('systemAlerts');
+            if (systemAlerts) {
+                systemAlerts.innerHTML = `
+                    <div class="alert alert-info">
+                        <strong>Simplified System:</strong> This version uses a shared database structure. 
+                        All users view the same data. For private per-user data, see the 
+                        advanced structure in Settings.
+                    </div>
+                `;
+            }
+        }
+
+        // Mostrar app de autenticação
+        function showAuthApp() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('mainContainer').style.display = 'none';
+            document.getElementById('chatWidget').style.display = 'none';
+            
+            clearAuthForms();
+        }
+
+        // Limpar formulários de auth
+        function clearAuthForms() {
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerName').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+            document.getElementById('authAlerts').innerHTML = '';
+        }
+
+        // Mostrar alertas de auth
+        function showAuthAlert(message, type) {
+            const container = document.getElementById('authAlerts');
+            if (!container) {
+                console.error('❌ Container de alertas não encontrado:', message);
+                if (type === 'danger' || type === 'warning') {
+                    alert('⚠️ ' + message);
+                }
+                return;
+            }
+            
+            container.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+            
+            setTimeout(() => {
+                if (container) {
+                    container.innerHTML = '';
+                }
+            }, 5000);
+        }
+
+        // Carregar categorias
+        async function loadCategories() {
+            if (!supabase || !currentUser || demoMode) return;
+            
+            try {
+                const { data, error } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('nome')
+                    .limit(1);
+                
+                if (error) {
+                    console.log('Categories table not found, using default categories');
+                    return;
+                }
+                
+                const { data: allCategories } = await supabase
+                    .from('categories')
+                    .select('*')
+                    .order('nome');
+                
+                if (allCategories && allCategories.length > 0) {
+                    categories = { receita: [], despesa: [] };
+                    allCategories.forEach(cat => {
+                        if (categories[cat.tipo]) {
+                            categories[cat.tipo].push(cat.nome);
+                        }
+                    });
+                    updateCategories();
+                }
+                
+            } catch (error) {
+                console.log('Using default categories:', error.message);
+            }
+        }
+
+        // Sincronizar dados
+        async function sincronizarDados() {
+            if (!supabase || !currentUser || demoMode) {
+                if (demoMode) {
+                    showNotification('Demo mode - local data only', 'info');
+                }
+                return;
+            }
+            
+            const now = Date.now();
+            if (now - lastTransactionTime < 2000) {
+                showNotification('Please wait a moment before syncing...', 'warning');
+                return;
+            }
+            
+            try {
+                showNotification('Syncing data...', 'info');
+                
+                const { data, error } = await supabase
+                    .from('transactions')
+                    .select('*')
+                    .order('data', { ascending: false })
+                    .order('created_at', { ascending: false });
+                
+                if (error) throw error;
+                
+                transactions = data || [];
+                
+                transactions.sort((a, b) => {
+                    const dateCompare = new Date(b.data) - new Date(a.data);
+                    if (dateCompare !== 0) return dateCompare;
+                    return b.id - a.id;
+                });
+                
+                updateTransactionsTable();
+                updateAllDashboards();
+                
+                const userDataCount = document.getElementById('userDataCount');
+                if (userDataCount) {
+                    userDataCount.textContent = transactions.length;
+                }
+                
+                showNotification(`${transactions.length} records synchronized successfully`, 'success');
+                
+            } catch (error) {
+                console.error('Sync error:', error);
+                showNotification(`Error: ${error.message}`, 'danger');
+            }
+        }
+
+        // Adicionar lançamento
+        async function adicionarLancamento() {
+            const data = document.getElementById('quickDate').value;
+            const tipo = document.getElementById('quickTipo').value;
+            const categoria = document.getElementById('quickCategoria').value;
+            const valor = parseFloat(document.getElementById('quickValor').value);
+            const descricao = document.getElementById('quickDescricao').value;
+            
+            if (!data || !valor || !descricao) {
+                showNotification('❌ Preencha todos os campos obrigatórios', 'danger');
+                return;
+            }
+            
+            if (valor <= 0) {
+                showNotification('❌ Valor deve ser maior que zero', 'danger');
+                return;
+            }
+            
+            if (demoMode) {
+                const newTransaction = {
+                    id: Date.now(),
+                    data,
+                    tipo,
+                    categoria,
+                    valor,
+                    descricao,
+                    created_at: new Date().toISOString()
+                };
+                
+                transactions.unshift(newTransaction);
+                updateTransactionsTable();
+                updateAllDashboards();
+                clearQuickForm();
+                showNotification('✅ Lançamento adicionado (modo demo)!', 'success');
+                return;
+            }
+            
+            if (!supabase || !currentUser) {
+                showNotification('❌ Usuário não autenticado', 'danger');
+                return;
+            }
+            
+            try {
+                const btn = document.getElementById('btnAdicionar');
+                btn.disabled = true;
+                btn.innerHTML = '<span class="loading"></span> Salvando...';
+                
+                const transactionData = {
+                    data,
+                    tipo,
+                    categoria,
+                    valor,
+                    descricao
+                };
+                
+                let newTransaction = null;
+                let error = null;
+                
+                try {
+                    const result = await supabase
+                        .from('transactions')
+                        .insert(transactionData)
+                        .select()
+                        .single();
+                    
+                    if (result.data) {
+                        newTransaction = result.data;
+                        transactions.unshift(newTransaction);
+                        updateTransactionsTable();
+                        updateAllDashboards();
+                        clearQuickForm();
+                        showNotification('✅ Lançamento salvo com sucesso!', 'success');
+                        return;
+                    }
+                    
+                    error = result.error;
+                } catch (e) {
+                    error = e;
+                }
+                
+                if (error) throw error;
+                
+            } catch (error) {
+                console.error('Erro ao adicionar:', error);
+                showNotification(`❌ Erro: ${error.message}`, 'danger');
+            } finally {
+                const btn = document.getElementById('btnAdicionar');
+                btn.disabled = false;
+                btn.innerHTML = '➕ Adicionar';
+            }
+        }
+
+        // Remover lançamento
+        async function removerLancamento(id) {
+            if (!confirm('Are you sure you want to remove this transaction?')) {
+                return;
+            }
+            
+            if (demoMode) {
+                transactions = transactions.filter(t => t.id !== id);
+                updateTransactionsTable();
+                updateAllDashboards();
+                showNotification('Transaction removed (demo mode)', 'warning');
+                return;
+            }
+            
+            if (!supabase || !currentUser) {
+                showNotification('User not authenticated', 'danger');
+                return;
+            }
+            
+            try {
+                const { error } = await supabase
+                    .from('transactions')
+                    .delete()
+                    .eq('id', id);
+                
+                if (error) throw error;
+                
+                transactions = transactions.filter(t => t.id !== id);
+                updateTransactionsTable();
+                updateAllDashboards();
+                
+                showNotification('Transaction removed successfully', 'warning');
+                
+            } catch (error) {
+                console.error('Error removing transaction:', error);
+                showNotification(`Error: ${error.message}`, 'danger');
+            }
+        }
+
+        // Importar dados de exemplo
+        function importarDadosExemplo() {
+            const exemplos = [
+                {
+                    id: Date.now() + 1,
+                    data: '2025-05-15',
+                    tipo: 'receita',
+                    categoria: 'Outras',
+                    valor: 17500,
+                    descricao: 'Angel investor funding',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 2,
+                    data: '2025-05-10',
+                    tipo: 'despesa',
+                    categoria: 'Pró-labore',
+                    valor: 5735.36,
+                    descricao: 'Partner salaries',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 3,
+                    data: '2025-05-20',
+                    tipo: 'despesa',
+                    categoria: 'Impostos',
+                    valor: 3534.80,
+                    descricao: 'Monthly taxes',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 4,
+                    data: '2025-05-25',
+                    tipo: 'despesa',
+                    categoria: 'Terceiros',
+                    valor: 2024.50,
+                    descricao: 'Accounting services',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 5,
+                    data: '2025-06-05',
+                    tipo: 'receita',
+                    categoria: 'Consultoria',
+                    valor: 5910.83,
+                    descricao: 'IT Consulting - Client A',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 6,
+                    data: '2025-06-15',
+                    tipo: 'receita',
+                    categoria: 'Desenvolvimento',
+                    valor: 6875,
+                    descricao: 'Mobile app development',
+                    created_at: new Date().toISOString()
+                },
+                {
+                    id: Date.now() + 7,
+                    data: '2025-06-20',
+                    tipo: 'despesa',
+                    categoria: 'Outras',
+                    valor: 14165.10,
+                    descricao: 'Equipment investment',
+                    created_at: new Date().toISOString()
+                }
+            ];
+            
+            transactions = [...exemplos, ...transactions];
+            updateTransactionsTable();
+            updateAllDashboards();
+            showNotification('Sample data loaded successfully!', 'success');
+        }
+
+        // Gerenciar abas
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'aggregated' || tabName === 'trends') {
+                updateAllDashboards();
+            }
+            
+            if (tabName === 'charts') {
+                setTimeout(createCharts, 100);
+            }
+        }
+
+        // Atualizar categorias no select
+        function updateCategories() {
+            const tipoSelect = document.getElementById('quickTipo');
+            const categoriaSelect = document.getElementById('quickCategoria');
+            
+            if (!tipoSelect || !categoriaSelect) return;
+            
+            function populateCategories() {
+                const tipo = tipoSelect.value;
+                categoriaSelect.innerHTML = '';
+                categories[tipo].forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = cat;
+                    categoriaSelect.appendChild(option);
+                });
+            }
+            
+            tipoSelect.addEventListener('change', populateCategories);
+            populateCategories();
+        }
+
+        // Limpar formulário rápido
+        function clearQuickForm() {
+            const valor = document.getElementById('quickValor');
+            const descricao = document.getElementById('quickDescricao');
+            
+            if (valor) {
+                valor.value = '';
+                valor.focus();
+            }
+            if (descricao) descricao.value = '';
+        }
+
+        // Atualizar tabela de transações
+        function updateTransactionsTable() {
+            const tbody = document.getElementById('transactionsBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            const uniqueTransactions = [];
+            const seenIds = new Set();
+            
+            for (const transaction of transactions) {
+                if (!seenIds.has(transaction.id)) {
+                    seenIds.add(transaction.id);
+                    uniqueTransactions.push(transaction);
+                }
+            }
+            
+            const sortedTransactions = uniqueTransactions.sort((a, b) => {
+                const dateCompare = new Date(b.data) - new Date(a.data);
+                if (dateCompare !== 0) return dateCompare;
+                return b.id - a.id;
+            });
+            
+            sortedTransactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.className = `transaction-row ${transaction.tipo}`;
+                
+                const dataFormatada = new Date(transaction.data).toLocaleDateString('pt-BR');
+                const valorFormatado = formatCurrency(transaction.valor);
+                const valorClass = transaction.tipo === 'receita' ? 'value-positive' : 'value-negative';
+                const tipoText = transaction.tipo === 'receita' ? 'Revenue' : 'Expense';
+                
+                row.innerHTML = `
+                    <td>${dataFormatada}</td>
+                    <td>${tipoText}</td>
+                    <td>${transaction.categoria}</td>
+                    <td>${transaction.descricao}</td>
+                    <td class="${valorClass}">${valorFormatado}</td>
+                    <td>
+                        <button class="btn btn-danger" onclick="removerLancamento(${transaction.id})" 
+                                style="padding: 5px 10px; font-size: 12px; width: auto;">
+                            Remove
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Atualizar todos os dashboards
+        function updateAllDashboards() {
+            if (updateDashboardTimeout) {
+                clearTimeout(updateDashboardTimeout);
+            }
+            
+            updateDashboardTimeout = setTimeout(() => {
+                updateAggregatedMetrics();
+                updateTrends();
+                updateProjections();
+                updateAlerts();
+            }, 100);
+        }
+
+        // Atualizar indicadores agregados
+        function updateAggregatedMetrics() {
+            if (transactions.length === 0) {
+                resetAllMetrics();
+                return;
+            }
+            
+            const receitaTotal = transactions.filter(t => t.tipo === 'receita').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const despesaTotal = transactions.filter(t => t.tipo === 'despesa').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const resultadoTotal = receitaTotal - despesaTotal;
+            
+            const monthlyData = getMonthlyData();
+            
+            const receitaMedia = monthlyData.length > 0 ? monthlyData.reduce((sum, data) => sum + data.receitas, 0) / monthlyData.length : 0;
+            const despesaMedia = monthlyData.length > 0 ? monthlyData.reduce((sum, data) => sum + data.despesas, 0) / monthlyData.length : 0;
+            const margemMedia = receitaTotal > 0 ? (resultadoTotal / receitaTotal) : 0;
+            
+            animateValue('receitaAcumulada', receitaTotal, 'currency');
+            animateValue('despesasAcumuladas', despesaTotal, 'currency');
+            animateValue('resultadoAcumulado', resultadoTotal, 'currency');
+            animateValue('margemMedia', margemMedia, 'percent');
+            animateValue('receitaMedia', receitaMedia, 'currency');
+            animateValue('burnrateMedia', despesaMedia, 'currency');
+            
+            setElementColor('resultadoAcumulado', resultadoTotal >= 0 ? 'var(--success)' : 'var(--danger)');
+            
+            if (resultadoTotal >= 0) {
+                updateElement('resultadoTrend', '↑ Accumulated profit');
+                document.getElementById('resultadoTrend').className = 'metric-trend trend-up';
+            } else {
+                updateElement('resultadoTrend', '↓ Accumulated loss');
+                document.getElementById('resultadoTrend').className = 'metric-trend trend-down';
+            }
+            
+            updateMixReceitas();
+            updateEficienciaOperacional();
+        }
+
+        // Mix de Receitas
+        function updateMixReceitas() {
+            const totalReceitas = transactions.filter(t => t.tipo === 'receita').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            
+            if (totalReceitas === 0) {
+                updateElement('mixConsultoria', '0%');
+                updateElement('mixDesenvolvimento', '0%');
+                updateElement('mixOutras', '0%');
+                updateElement('consultoriaValue', 'R$ 0,00');
+                updateElement('desenvolvimentoValue', 'R$ 0,00');
+                updateElement('outrasValue', 'R$ 0,00');
+                return;
+            }
+            
+            const consultoriaTotal = transactions.filter(t => t.tipo === 'receita' && t.categoria === 'Consultoria').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const desenvolvimentoTotal = transactions.filter(t => t.tipo === 'receita' && t.categoria === 'Desenvolvimento').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const outrasTotal = totalReceitas - consultoriaTotal - desenvolvimentoTotal;
+            
+            animateValue('mixConsultoria', consultoriaTotal / totalReceitas, 'percent');
+            animateValue('mixDesenvolvimento', desenvolvimentoTotal / totalReceitas, 'percent');
+            animateValue('mixOutras', outrasTotal / totalReceitas, 'percent');
+            
+            updateElement('consultoriaValue', formatCurrency(consultoriaTotal));
+            updateElement('desenvolvimentoValue', formatCurrency(desenvolvimentoTotal));
+            updateElement('outrasValue', formatCurrency(outrasTotal));
+        }
+
+        // Eficiência Operacional
+        function updateEficienciaOperacional() {
+            const totalReceitas = transactions.filter(t => t.tipo === 'receita').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const totalDespesas = transactions.filter(t => t.tipo === 'despesa').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            
+            const roi = totalDespesas > 0 ? ((totalReceitas / totalDespesas) - 1) : 0;
+            animateValue('roiAcumulado', roi, 'percent');
+            setElementColor('roiAcumulado', roi >= 0 ? 'var(--success)' : 'var(--danger)');
+            
+            const impostosTotal = transactions.filter(t => t.tipo === 'despesa' && t.categoria === 'Impostos').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const cargaTributaria = totalReceitas > 0 ? (impostosTotal / totalReceitas) : 0;
+            animateValue('cargaTributaria', cargaTributaria, 'percent');
+            
+            const prolaboreTotal = transactions.filter(t => t.tipo === 'despesa' && t.categoria === 'Pró-labore').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const assinaturasTotal = transactions.filter(t => t.tipo === 'despesa' && t.categoria === 'Assinaturas').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const custosFixos = totalDespesas > 0 ? ((prolaboreTotal + assinaturasTotal) / totalDespesas) : 0;
+            animateValue('custosFixes', custosFixos, 'percent');
+        }
+
+        // Atualizar tendências
+        function updateTrends() {
+            const monthlyData = getMonthlyData();
+            
+            if (monthlyData.length < 2) {
+                updateElement('crescimentoMedio', '0%');
+                updateElement('volatilidadeReceita', '0%');
+                updateElement('mesesPositivos', '0');
+                updateElement('percentualPositivos', '0%');
+                updateElement('maiorResultado', formatCurrency(0));
+                updateElement('maiorResultadoMes', '-');
+                return;
+            }
+            
+            let crescimentos = [];
+            for (let i = 1; i < monthlyData.length; i++) {
+                const anterior = monthlyData[i-1].receitas;
+                const atual = monthlyData[i].receitas;
+                if (anterior > 0) {
+                    crescimentos.push((atual - anterior) / anterior);
+                }
+            }
+            
+            const crescimentoMedio = crescimentos.length > 0 ? crescimentos.reduce((sum, val) => sum + val, 0) / crescimentos.length : 0;
+            animateValue('crescimentoMedio', crescimentoMedio, 'percent');
+            
+            const receitas = monthlyData.map(data => data.receitas);
+            const media = receitas.reduce((sum, val) => sum + val, 0) / receitas.length;
+            const variancia = receitas.reduce((sum, val) => sum + Math.pow(val - media, 2), 0) / receitas.length;
+            const desvio = Math.sqrt(variancia);
+            const volatilidade = media > 0 ? desvio / media : 0;
+            animateValue('volatilidadeReceita', volatilidade, 'percent');
+            
+            const mesesPositivos = monthlyData.filter(data => data.resultado > 0).length;
+            const percentualPositivos = monthlyData.length > 0 ? mesesPositivos / monthlyData.length : 0;
+            updateElement('mesesPositivos', mesesPositivos);
+            animateValue('percentualPositivos', percentualPositivos, 'percent');
+            
+            const resultados = monthlyData.map(data => data.resultado);
+            const maiorResultado = Math.max(...resultados);
+            const maiorResultadoIndex = resultados.indexOf(maiorResultado);
+            const maiorResultadoMes = monthlyData[maiorResultadoIndex]?.month;
+            
+            animateValue('maiorResultado', maiorResultado, 'currency');
+            if (maiorResultadoMes) {
+                updateElement('maiorResultadoMes', new Date(maiorResultadoMes + '-01').toLocaleDateString('en-US', {month: 'long', year: 'numeric'}));
+            }
+            
+            updateTrendsTable();
+        }
+
+        // Atualizar tabela de tendências
+        function updateTrendsTable() {
+            const tbody = document.getElementById('trendsTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            const monthlyData = getMonthlyData();
+            
+            if (monthlyData.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No data available</td></tr>';
+                return;
+            }
+            
+            monthlyData.forEach((data, index) => {
+                let crescimentoMoM = '';
+                if (index > 0) {
+                    const anterior = monthlyData[index-1].receitas;
+                    if (anterior > 0) {
+                        const crescimento = (data.receitas - anterior) / anterior;
+                        crescimentoMoM = formatPercent(crescimento);
+                    }
+                }
+                
+                const status = data.resultado > 0 ? '✓ Positive' : '✗ Negative';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${new Date(data.month + '-01').toLocaleDateString('en-US', {month: 'long', year: 'numeric'})}</td>
+                    <td>${formatCurrency(data.receitas)}</td>
+                    <td>${formatCurrency(data.despesas)}</td>
+                    <td style="color: ${data.resultado >= 0 ? 'var(--success)' : 'var(--danger)'}">${formatCurrency(data.resultado)}</td>
+                    <td>${crescimentoMoM || '-'}</td>
+                    <td style="color: ${data.margem >= 0 ? 'var(--success)' : 'var(--danger)'}">${formatPercent(data.margem)}</td>
+                    <td>${status}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Atualizar projeções
+        function updateProjections() {
+            const monthlyData = getMonthlyData();
+            
+            if (monthlyData.length === 0) {
+                updateElement('receitaProjetada', formatCurrency(0));
+                updateElement('breakEven', formatCurrency(0));
+                updateElement('runway', '0');
+                updateElement('runwayTrend', 'No historical data');
+                updateElement('metaMargem', 'Configure data');
+                return;
+            }
+            
+            const ultimosMeses = monthlyData.slice(-3);
+            const receitaMedia = ultimosMeses.reduce((sum, data) => sum + data.receitas, 0) / ultimosMeses.length;
+            animateValue('receitaProjetada', receitaMedia, 'currency');
+            
+            const despesaMedia = monthlyData.reduce((sum, data) => sum + data.despesas, 0) / monthlyData.length;
+            animateValue('breakEven', despesaMedia, 'currency');
+            
+            const ultimoResultado = monthlyData[monthlyData.length - 1];
+            const resultadoMedio = monthlyData.reduce((sum, data) => sum + data.resultado, 0) / monthlyData.length;
+            
+            if (ultimoResultado.resultado > 0) {
+                updateElement('runway', '∞');
+                updateElement('runwayTrend', 'Sustainable');
+            } else {
+                const caixaDefault = 50000;
+                const runway = Math.abs(resultadoMedio) > 0 ? Math.floor(caixaDefault / Math.abs(resultadoMedio)) : 0;
+                updateElement('runway', runway);
+                updateElement('runwayTrend', `With ${formatCurrency(caixaDefault)} in cash`);
+            }
+            
+            const margemAtual = monthlyData.reduce((sum, data) => sum + data.margem, 0) / monthlyData.length;
+            const metaMargem = 0.20;
+            const statusMeta = margemAtual >= metaMargem ? '✓ Achieving' : '✗ Below target';
+            updateElement('metaMargem', statusMeta);
+        }
+
+        // Atualizar alertas
+        function updateAlerts() {
+            const alertsContainer = document.getElementById('alertsContainer');
+            alertsContainer.innerHTML = '';
+            
+            if (transactions.length === 0) return;
+            
+            const monthlyData = getMonthlyData();
+            if (monthlyData.length === 0) return;
+            
+            const ultimoMes = monthlyData[monthlyData.length - 1];
+            const margemMedia = monthlyData.reduce((sum, data) => sum + data.margem, 0) / monthlyData.length;
+            
+            if (ultimoMes.resultado < 0) {
+                alertsContainer.innerHTML += `
+                    <div class="alert alert-warning">
+                        <strong>Negative Result:</strong> Last month showed a loss of ${formatCurrency(Math.abs(ultimoMes.resultado))}
+                    </div>
+                `;
+            }
+            
+            if (margemMedia < 0.15) {
+                alertsContainer.innerHTML += `
+                    <div class="alert alert-warning">
+                        <strong>Low Margin:</strong> Average margin of ${formatPercent(margemMedia)} is below recommended (20%+)
+                    </div>
+                `;
+            }
+            
+            if (ultimoMes.resultado > 0 && margemMedia > 0.20) {
+                alertsContainer.innerHTML += `
+                    <div class="alert alert-success">
+                        <strong>Positive Performance:</strong> Company shows healthy results with ${formatPercent(margemMedia)} margin
+                    </div>
+                `;
+            }
+            
+            const receitaTotal = transactions.filter(t => t.tipo === 'receita').reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            const outrasReceitas = transactions.filter(t => t.tipo === 'receita' && (t.categoria === 'Outras' || t.categoria === 'Licenciamento')).reduce((sum, t) => sum + parseFloat(t.valor), 0);
+            if (receitaTotal > 0 && outrasReceitas / receitaTotal > 0.5) {
+                alertsContainer.innerHTML += `
+                    <div class="alert alert-info">
+                        <strong>Diversification:</strong> ${formatPercent(outrasReceitas/receitaTotal)} of revenue comes from non-core categories
+                    </div>
+                `;
+            }
+        }
+
+        // Calcular cenário
+        function calcularCenario() {
+            const metaReceita = parseFloat(document.getElementById('metaReceita').value);
+            const aumentoDespesas = parseFloat(document.getElementById('aumentoDespesas').value) || 0;
+            const caixaDisponivel = parseFloat(document.getElementById('caixaDisponivel').value) || 50000;
+            
+            if (!metaReceita) {
+                showNotification('❌ Digite uma meta de receita', 'danger');
+                return;
+            }
+            
+            const monthlyData = getMonthlyData();
+            const despesaMedia = monthlyData.length > 0 ? 
+                monthlyData.reduce((sum, data) => sum + data.despesas, 0) / monthlyData.length : 0;
+            
+            const novaDespesa = despesaMedia * (1 + aumentoDespesas / 100);
+            const novoResultado = metaReceita - novaDespesa;
+            const novaMargem = metaReceita > 0 ? novoResultado / metaReceita : 0;
+            const novoRunway = novoResultado < 0 ? Math.floor(caixaDisponivel / Math.abs(novoResultado)) : '∞';
+            
+            const resultHtml = `
+                <div class="metric-card">
+                    <h4>📊 Scenario Result</h4>
+                    <p><strong>Target Revenue:</strong> ${formatCurrency(metaReceita)}</p>
+                    <p><strong>Estimated Expenses:</strong> ${formatCurrency(novaDespesa)} (+${aumentoDespesas}%)</p>
+                    <p><strong>Projected Result:</strong> <span style="color: ${novoResultado >= 0 ? '#4CAF50' : '#f44336'}">${formatCurrency(novoResultado)}</span></p>
+                    <p><strong>Projected Margin:</strong> <span style="color: ${novaMargem >= 0.2 ? '#4CAF50' : novaMargem >= 0 ? '#FFA500' : '#f44336'}">${formatPercent(novaMargem)}</span></p>
+                    <p><strong>Runway:</strong> ${novoRunway} ${novoRunway !== '∞' ? 'months' : '(sustainable)'}</p>
+                    <p><strong>Status:</strong> ${novaMargem >= 0.2 ? '✅ Excellent' : novaMargem >= 0.1 ? '⚠️ Acceptable' : '❌ Below ideal'}</p>
+                </div>
+            `;
+            
+            document.getElementById('cenarioResult').innerHTML = resultHtml;
+        }
+
+        // Criar gráficos
+        function createCharts() {
+            if (transactions.length === 0) {
+                showNotification('📊 Adicione lançamentos para visualizar os gráficos', 'info');
+                return;
+            }
+            
+            Object.values(charts).forEach(chart => {
+                if (chart) chart.destroy();
+            });
+            
+            createEvolutionChart();
+            createRevenueChart();
+            createExpenseChart();
+            createMarginChart();
+            createTrendsChart();
+        }
+
+        // Gráfico de evolução
+        function createEvolutionChart() {
+            const ctx = document.getElementById('evolutionChart')?.getContext('2d');
+            if (!ctx) return;
+            
+            const monthlyData = getMonthlyData();
+            if (monthlyData.length === 0) return;
+            
+            const labels = monthlyData.map(data => 
+                new Date(data.month + '-01').toLocaleDateString('pt-BR', {month: 'short', year: 'numeric'})
+            );
+            
+            charts.evolution = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Receitas',
+                            data: monthlyData.map(data => data.receitas),
+                            borderColor: '#4CAF50',
+                            backgroundColor: '#4CAF5020',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Despesas',
+                            data: monthlyData.map(data => data.despesas),
+                            borderColor: '#f44336',
+                            backgroundColor: '#f4433620',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gráfico de receitas
+        function createRevenueChart() {
+            const ctx = document.getElementById('revenueChart')?.getContext('2d');
+            if (!ctx) return;
+            
+            const revenueByCategory = getCategoryData('receita');
+            if (Object.keys(revenueByCategory).length === 0) return;
+            
+            const labels = Object.keys(revenueByCategory);
+            const data = Object.values(revenueByCategory);
+            const colors = ['#4facfe', '#00f2fe', '#4CAF50', '#2196f3', '#9c27b0', '#ff9800'];
+            
+            charts.revenue = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return context.label + ': ' + formatCurrency(context.parsed) + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gráfico de despesas
+        function createExpenseChart() {
+            const ctx = document.getElementById('expenseChart')?.getContext('2d');
+            if (!ctx) return;
+            
+            const expenseByCategory = getCategoryData('despesa');
+            if (Object.keys(expenseByCategory).length === 0) return;
+            
+            const labels = Object.keys(expenseByCategory);
+            const data = Object.values(expenseByCategory);
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3'];
+            
+            charts.expense = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, labels.length),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return context.label + ': ' + formatCurrency(context.parsed) + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gráfico de margem
+        function createMarginChart() {
+            const ctx = document.getElementById('marginChart')?.getContext('2d');
+            if (!ctx) return;
+            
+            const monthlyData = getMonthlyData();
+            if (monthlyData.length === 0) return;
+            
+            const labels = monthlyData.map(data => 
+                new Date(data.month + '-01').toLocaleDateString('pt-BR', {month: 'short', year: 'numeric'})
+            );
+            
+            charts.margin = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Margem (%)',
+                        data: monthlyData.map(data => data.margem * 100),
+                        backgroundColor: monthlyData.map(data => data.margem >= 0.2 ? '#4CAF50' : data.margem >= 0 ? '#FFA500' : '#f44336'),
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return 'Margem: ' + context.parsed.y.toFixed(1) + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Gráfico de tendências
+        function createTrendsChart() {
+            const ctx = document.getElementById('trendsChart')?.getContext('2d');
+            if (!ctx) return;
+            
+            const monthlyData = getMonthlyData();
+            if (monthlyData.length === 0) return;
+            
+            const labels = monthlyData.map(data => 
+                new Date(data.month + '-01').toLocaleDateString('pt-BR', {month: 'short', year: 'numeric'})
+            );
+            
+            charts.trends = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Receitas',
+                            data: monthlyData.map(data => data.receitas),
+                            backgroundColor: '#4CAF5080',
+                            borderColor: '#4CAF50',
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Despesas',
+                            data: monthlyData.map(data => data.despesas),
+                            backgroundColor: '#f4433680',
+                            borderColor: '#f44336',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': ' + formatCurrency(context.parsed.y);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return formatCurrency(value);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Dados auxiliares
+        function getMonthlyData() {
+            const monthlyMap = new Map();
+            
+            transactions.forEach(transaction => {
+                const date = new Date(transaction.data);
+                const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                
+                if (!monthlyMap.has(monthKey)) {
+                    monthlyMap.set(monthKey, { 
+                        month: monthKey, 
+                        receitas: 0, 
+                        despesas: 0,
+                        resultado: 0,
+                        margem: 0
+                    });
+                }
+                
+                const monthData = monthlyMap.get(monthKey);
+                const valor = parseFloat(transaction.valor);
+                
+                if (transaction.tipo === 'receita') {
+                    monthData.receitas += valor;
+                } else {
+                    monthData.despesas += valor;
+                }
+            });
+            
+            monthlyMap.forEach(data => {
+                data.resultado = data.receitas - data.despesas;
+                data.margem = data.receitas > 0 ? data.resultado / data.receitas : 0;
+            });
+            
+            return Array.from(monthlyMap.values()).sort((a, b) => a.month.localeCompare(b.month));
+        }
+
+        function getCategoryData(tipo) {
+            const categoryMap = {};
+            
+            transactions
+                .filter(t => t.tipo === tipo)
+                .forEach(transaction => {
+                    if (!categoryMap[transaction.categoria]) {
+                        categoryMap[transaction.categoria] = 0;
+                    }
+                    categoryMap[transaction.categoria] += parseFloat(transaction.valor);
+                });
+            
+            return categoryMap;
+        }
+
+        // Exportação de dados
+        function exportarCSV() {
